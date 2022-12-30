@@ -1,0 +1,26 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.workspace.library": [
+        "C:\\Users\\mdray\\AppData\\Local\\nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lsp",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp_luasnip",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\LuaSnip",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\mason-lspconfig.nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\mason.nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-cmp",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-lspconfig",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\nvim-treesitter",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\packer.nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\plenary.nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope.nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\opt\\nvim-treesitter-textobjects",
+        "C:\\Users\\mdray\\scoop\\apps\\neovim\\current\\share\\nvim\\runtime",
+        "C:\\Users\\mdray\\scoop\\apps\\neovim\\current\\share\\nvim\\runtime\\pack\\dist\\opt\\matchit",
+        "C:\\Users\\mdray\\scoop\\apps\\neovim\\current\\lib\\nvim",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp-nvim-lsp\\after",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp_luasnip\\after",
+        "C:\\Users\\mdray\\AppData\\Local\\nvim\\after",
+        "${3rd}/luassert/library"
+    ]
+}
