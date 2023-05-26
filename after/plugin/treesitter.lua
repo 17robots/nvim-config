@@ -1,6 +1,5 @@
 require'nvim-treesitter.configs'.setup {
     ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
-
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
@@ -43,5 +42,4 @@ require'nvim-treesitter.configs'.setup {
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
