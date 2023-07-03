@@ -158,6 +158,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["transparent.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\mdray\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\transparent.nvim",
+    url = "https://github.com/xiyaowong/transparent.nvim"
   }
 }
 
