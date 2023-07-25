@@ -1,57 +1,52 @@
-local on_attach = function(_, bufnr)
-    local nmap = function(keys, func, desc)
-        if desc then desc = 'LSP: ' .. desc end
-	vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-    end
-
-    nmap('<leader>r', vim.lsp.buf.rename, '[R]e[N]ame')
-    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-    nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-    nmap('gr', require'telescope.builtin'.lsp_references, '[G]oto [R]eferences')
-    nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-    nmap('<leader>k', vim.lsp.buf.type_definition, 'Type [D]efinition')
-    nmap('<leader>ds', require'telescope.builtin'.lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>ws', require'telescope.builtin'.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    nmap('<c-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        if vim.lsp.buf.format then vim.lsp.buf.format() elseif vim.lsp.buf.formatting then vim.lsp.buf.formatting() end
-    end, { desc = 'Format current buffer'})
-end
-
 local servers = { 'rust_analyzer', 'pyright', 'tsserver', 'gopls' }
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require'cmp_nvim_lsp'.default_capabilities(capabilities)
-for _, lsp in ipairs(servers) do require'lspconfig'[lsp].setup { on_attach = on_attach, capabilities = capabilities } end
-require'mason'.setup()
-require'mason-lspconfig'.setup { ensure_installed = servers }
-require'null-ls'.setup()
-require'mason-null-ls'.setup { automatic_setup = true, handlers = {} }
+local lsp = require'lsp-zero'
 
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+lsp.preset('recommended')
+lsp.ensure_installed(servers)
 
-local luasnip = require'luasnip'
+lsp.nvim_workspace()
+
 local cmp = require'cmp'
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_mappings = lsp.defaults.cmp_mappings({
+  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+  ['<C-n>'] = cmp.mapping.confirm({select = true}),
+  ['<C-Space>'] = cmp.mapping.complete(),
+})
 
-cmp.setup {
-  snippet = {
-      expand = function(args) luasnip.lsp_expand(args.body) end
-  },
-  mapping = cmp.mapping.preset.insert {
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<CR>'] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
-      ['<Tab>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_next_item() elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump() else fallback() end end, {'i', 's'}),
-      ['<S-Tab>'] = cmp.mapping(function(fallback) if cmp.visible() then cmp.select_prev_item() elseif luasnip.jumpable(-1) then luasnip.jump(-1) else fallback() end end, {'i', 's'}),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'null_ls' },
+cmp_mappings['<Tab>'] = nil
+cmp_mappings['<S-Tab>'] = nil
+
+lsp.setup_nvim_cmp({ mapping = cmp_mappings })
+
+lsp.set_preferences({
+  suggest_lsp_servers = false,
+  sign_icons = {
+    error = 'E',
+    warn = 'W',
+    hint = 'H',
+    info = 'I',
   }
-}
+})
+
+lsp.on_attach(function(client, bufnr)
+  local opts = {buffer=bufnr,remap=false}
+
+  vim.keymap.set("n","gd",function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n","K",function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set("n","<leader>ws",function() vim.lsp.buf.workspace_symbol() end, opts)
+  vim.keymap.set("n","<leader>d",function() vim.diagnostic.open_float() end, opts)
+  vim.keymap.set("n","[d",function() vim.diagnostic.goto_next() end, opts)
+  vim.keymap.set("n","]d",function() vim.diagnostic.goto_prev() end, opts)
+  vim.keymap.set("n","<leader>ca",function() vim.lsp.buf.code_action() end, opts)
+  vim.keymap.set("n","gr",function() vim.lsp.buf.references() end, opts)
+  vim.keymap.set("n","<leader>r",function() vim.lsp.buf.rename() end, opts)
+  vim.keymap.set("i","<C-h>",function() vim.lsp.buf.signature_help() end, opts)
+end)
+
+lsp.setup()
+
+vim.diagnostic.config({
+  virtual_text = true
+})
