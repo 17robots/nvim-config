@@ -8,7 +8,7 @@ vim.o.mouse = 'a'
 vim.o.breakindent = true
 
 vim.o.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+-- vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.swapfile = false
 vim.opt.backup = false
 
