@@ -1,32 +1,38 @@
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-    vim.cmd [[packadd packer.nvim]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+print(lazypath)
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function(use)
-  use'wbthomason/packer.nvim'
-  use'theprimeagen/harpoon'
-  use'theprimeagen/refactoring.nvim'
-  use'mbbill/undotree'
-  use'tpope/vim-fugitive'
-  use'nvim-treesitter/nvim-treesitter-context'
-  use'xiyaowong/transparent.nvim'
+require'lazy'.setup({
+ 'theprimeagen/harpoon',
+ 'xiyaowong/transparent.nvim',
+ 'mbbill/undotree',
+ { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+ {
+   'neovim/nvim-lspconfig',
+   dependencies = { 
+    {'williamboman/mason.nvim', config = true,},
+    'williamboman/mason-lspconfig.nvim',
+    'hrsh7th/nvim-cmp',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp',
+    'rafamadriz/friendly-snippets'
+   }
+ },
+ {'rose-pine/neovim', name = 'rose-pine', config = function() vim.cmd'colorscheme rose-pine' end},
+ {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
+    'nvim-lua/plenary.nvim',
+    {'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = function() return vim.fn.executable'make' == 1 end}
+ }}
+})
 
-  use{'rose-pine/neovim', as = 'rose-pine', config = function() vim.cmd'colorscheme rose-pine' end}
-  use { 'nvim-telescope/telescope.nvim', tag = '0.1.0', requires = { { 'nvim-lua/plenary.nvim' } }}
-  use { 'folke/trouble.nvim', config = function() require('trouble').setup { icons = false } end }
-  use { 'nvim-treesitter/nvim-treesitter', run = function() local ts_update = require('nvim-treesitter.install').update({ with_sync = true }); ts_update(); end, }
-  use {'neovim/nvim-lspconfig', requires = {
-    {'williamboman/mason.nvim'},
-    {'williamboman/mason-lspconfig.nvim'},
-    {'hrsh7th/nvim-cmp'},
-    {'hrsh7th/cmp-buffer'},
-    {'hrsh7th/cmp-path'}, 
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'hrsh7th/cmp-nvim-lua'},
-    {'saadparwaiz1/cmp_luasnip'},
-    {'L3MON4D3/LuaSnip'},
-    {'rafamadriz/friendly-snippets/cmp_luasnip'}
-  }}
-end)
