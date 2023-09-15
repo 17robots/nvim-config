@@ -29,7 +29,7 @@ require'lazy'.setup({
     'rafamadriz/friendly-snippets'
    }
  },
- {'rose-pine/neovim', name = 'rose-pine', config = function() vim.cmd'colorscheme rose-pine' end},
+ {'Soares/base16.nvim', config = function() vim.cmd'set background=dark' vim.cmd'colorscheme pop' end},
  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
     'nvim-lua/plenary.nvim',
     {'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = function() return vim.fn.executable'make' == 1 end}

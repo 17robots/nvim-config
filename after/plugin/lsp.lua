@@ -6,7 +6,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 local on_attach = function(_, bufnr)
   vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, '[R]ename')
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ctions')
+  vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, 'Code [A]ctions')
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   vim.keymap.set('n', 'gr', require'telescope.builtin'.lsp_references, '[G]oto [R]eferences')
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')

@@ -10,10 +10,11 @@ vim.keymap.set('n', "N", "Nzzzv")
 vim.keymap.set('n', "<leader>y", "\"+y")
 vim.keymap.set('n', "<leader>d", "\"_d")
 vim.keymap.set('n', "Q", "<nop>")
-vim.keymap.set('n', "<leader>x", vim.cmd.Ex)
+vim.keymap.set('n', "<leader>x", vim.cmd.Lexplore)
 vim.keymap.set('n', "ge", "G")
 vim.keymap.set('n', "gs", "^")
 vim.keymap.set('n', "gl", "$h")
+vim.keymap.set('n', "<leader>w", "<C-w>")
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end,
