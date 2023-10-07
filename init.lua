@@ -36,7 +36,6 @@ vim.opt.number = true
 
 -- plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-print(lazypath)
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -51,9 +50,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require'lazy'.setup({
  'theprimeagen/harpoon',
- 'xiyaowong/transparent.nvim',
  'mbbill/undotree',
  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
+ { 'olivercederborg/poimandres.nvim', lazy = false, priority = 1000, config = function() require'poimandres'.setup{} end},
  {
    'neovim/nvim-lspconfig',
    dependencies = { 
@@ -66,7 +65,7 @@ require'lazy'.setup({
     'rafamadriz/friendly-snippets'
    }
  },
- {'Soares/base16.nvim', config = function() vim.cmd'set background=dark' vim.cmd'colorscheme pop' end},
+ { "catppuccin/nvim", name = "catppuccin", priority = 1000, config = function() require'catppuccin'.setup{ flavour = "mocha" } end},
  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
     'nvim-lua/plenary.nvim',
     {'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = function() return vim.fn.executable'make' == 1 end}
@@ -74,6 +73,8 @@ require'lazy'.setup({
 })
 
 -- after (general)
+local colorscheme = 'catppuccin-frappe'
+vim.cmd('colorscheme ' .. colorscheme)
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -109,7 +110,7 @@ vim.keymap.set("n", "<leader>hj", function() ui.nav_file(2) end)
 vim.keymap.set("n", "<leader>hk", function() ui.nav_file(3) end)
 vim.keymap.set("n", "<leader>hl", function() ui.nav_file(4) end)
 
--- after(lsp)
+-- after (lsp)
 require'mason'.setup()
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message'})
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message'})
@@ -129,7 +130,6 @@ local on_attach = function(_, bufnr)
 end
 
 local servers = {
-  pyright = {},
   tsserver = {},
   lua_ls = {
     Lua = {
@@ -183,7 +183,8 @@ pcall(require'telescope'.load_extension, 'fzf')
 
 vim.keymap.set('n', '<leader>b', function() builtin.buffers(themes.get_dropdown { previewer = false}) end, { desc = 'Find existing [B]uffers' })
 vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = 'Search [F]iles' })
-vim.keymap.set('n', '<leader>/', function() builtin.grep_string({search = vim.fn.input("Grep >")}) end, { desc = 'Search with Grep' })
+vim.keymap.set('n', '<leader>i', builtin.diagnostics, { desc = 'Search d[I]agnostics' })
+vim.keymap.set('n', '<leader>/', function() builtin.grep_string({search = vim.fn.input("Grep > ")}) end, { desc = 'Search with Grep' })
 
 -- after (treesitter)
 require'nvim-treesitter.configs'.setup{
