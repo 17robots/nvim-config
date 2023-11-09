@@ -54,8 +54,20 @@ require'lazy'.setup({
  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
  { 'olivercederborg/poimandres.nvim', lazy = false, priority = 1000, config = function() require'poimandres'.setup{} end},
  {
+   'VonHeikemen/lsp-zero.nvim', branch = 'v3.x', dependencies = {
    'neovim/nvim-lspconfig',
-   dependencies = { 
+    {'williamboman/mason.nvim', config = true,},
+    'williamboman/mason-lspconfig.nvim',
+    'hrsh7th/nvim-cmp',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp',
+    'rafamadriz/friendly-snippets'
+   },
+ },
+ {
+   'neovim/nvim-lspconfig',
+   dependencies = {
     {'williamboman/mason.nvim', config = true,},
     'williamboman/mason-lspconfig.nvim',
     'hrsh7th/nvim-cmp',
@@ -111,59 +123,45 @@ vim.keymap.set("n", "<leader>hk", function() ui.nav_file(3) end)
 vim.keymap.set("n", "<leader>hl", function() ui.nav_file(4) end)
 
 -- after (lsp)
-require'mason'.setup()
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message'})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message'})
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message'})
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic list'})
-
-local on_attach = function(_, bufnr)
-  vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, '[R]ename')
-  vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, 'Code [A]ctions')
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  vim.keymap.set('n', 'gr', require'telescope.builtin'.lsp_references, '[G]oto [R]eferences')
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinitions')
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-end
-
-local servers = {
-  tsserver = {},
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    }
-  }
+require'mason'.setup{}
+local lsp = require'lsp-zero'
+local cmp = require'cmp'
+local servers = {'tsserver','rust_analyzer','gopls','zls', 'lua_ls'}
+require'mason-lspconfig'.setup{
+  ensure_installed = servers,
+  handlers = { lsp.default_setup }
 }
 
-local cmp = require'cmp'
-local luasnip = require'luasnip'
-luasnip.config.setup{}
-local mason_lsp = require'mason-lspconfig'
-local capabilities = require'cmp_nvim_lsp'.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-mason_lsp.setup{ ensure_installed = vim.tbl_keys(servers)}
-mason_lsp.setup_handlers{ function(server_name)
-  require'lspconfig'[server_name].setup{
-    capabilities = capabilities,
-    on_attach = on_attach,
-    settings = servers[server_name],
-  }
-end}
-
 cmp.setup{
-  snippet = { expand = function(args) luasnip.lsp_expand(args.body) end},
   mapping = cmp.mapping.preset.insert{
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true, }
-  },
-  sources = { { name = "nvim_lsp" }, { name = "luasnip" } }
+  }
 }
+
+lsp.on_attach(function(_, bufnr)
+  local opts = {buffer = bufnr, remap = false}
+
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message'}, opts)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message'}, opts)
+  vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message'}, opts)
+  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic list'}, opts)
+  vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { desc = '[R]ename' }, opts)
+  vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'Code [A]ctions' }, opts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = '[G]oto [D]efinition' }, opts)
+  vim.keymap.set('n', 'gr', require'telescope.builtin'.lsp_references, { desc = '[G]oto [R]eferences' }, opts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = '[G]oto [I]mplementation' }, opts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { desc = 'Type [D]efinitions' }, opts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' }, opts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature Documentation' }, opts)
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = '[G]oto [D]eclaration' }, opts)
+end)
+
+lsp.setup_servers(servers)
+
+vim.diagnostic.config{ virtual_text = true }
 
 -- after (telescope)
 local builtin = require'telescope.builtin'
