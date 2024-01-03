@@ -4,8 +4,6 @@ vim.opt.incsearch = false
 
 vim.wo.number = true
 
-vim.o.mouse = 'a'
-
 vim.o.breakindent = true
 
 vim.o.undofile = true
@@ -26,9 +24,9 @@ vim.o.completeopt = 'menuone,noselect'
 vim.g.mapleader = ' '
 vim.g.localleader = ' '
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
 vim.opt.relativenumber = true
@@ -52,7 +50,6 @@ require'lazy'.setup({
  'theprimeagen/harpoon',
  'mbbill/undotree',
  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
- { 'olivercederborg/poimandres.nvim', lazy = false, priority = 1000, config = function() require'poimandres'.setup{} end},
  {
    'VonHeikemen/lsp-zero.nvim', branch = 'v3.x', dependencies = {
    'neovim/nvim-lspconfig',
@@ -77,7 +74,7 @@ require'lazy'.setup({
     'rafamadriz/friendly-snippets'
    }
  },
- { "catppuccin/nvim", name = "catppuccin", priority = 1000, config = function() require'catppuccin'.setup{ flavour = "mocha" } end},
+ { "rose-pine/nvim", name = "rosepine", priority = 1000},
  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
     'nvim-lua/plenary.nvim',
     {'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = function() return vim.fn.executable'make' == 1 end}
@@ -85,8 +82,7 @@ require'lazy'.setup({
 })
 
 -- after (general)
-local colorscheme = 'catppuccin-frappe'
-vim.cmd('colorscheme ' .. colorscheme)
+vim.cmd('colorscheme rose-pine')
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
