@@ -74,7 +74,8 @@ require'lazy'.setup({
     'rafamadriz/friendly-snippets'
    }
  },
- { "rose-pine/nvim", name = "rosepine", priority = 1000},
+ 'projekt0n/github-nvim-theme',
+ 'xiyaowong/transparent.nvim',
  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
     'nvim-lua/plenary.nvim',
     {'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = function() return vim.fn.executable'make' == 1 end}
@@ -82,7 +83,8 @@ require'lazy'.setup({
 })
 
 -- after (general)
-vim.cmd('colorscheme rose-pine')
+vim.cmd('colorscheme github_dark')
+vim.cmd('TransparentEnable')
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -122,7 +124,7 @@ vim.keymap.set("n", "<leader>hl", function() ui.nav_file(4) end)
 require'mason'.setup{}
 local lsp = require'lsp-zero'
 local cmp = require'cmp'
-local servers = {'tsserver','rust_analyzer','gopls','zls', 'lua_ls'}
+local servers = {'tsserver','rust_analyzer', 'lua_ls'}
 require'mason-lspconfig'.setup{
   ensure_installed = servers,
   handlers = { lsp.default_setup }
