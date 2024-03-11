@@ -74,7 +74,7 @@ require'lazy'.setup({
     'rafamadriz/friendly-snippets'
    }
  },
- 'projekt0n/github-nvim-theme',
+ 'navarasu/onedark.nvim',
  'xiyaowong/transparent.nvim',
  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
     'nvim-lua/plenary.nvim',
@@ -83,7 +83,12 @@ require'lazy'.setup({
 })
 
 -- after (general)
-vim.cmd('colorscheme github_dark')
+require'onedark'.setup {
+  style = 'darker'
+}
+require'onedark'.load()
+
+vim.cmd('colorscheme onedark')
 vim.cmd('TransparentEnable')
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -102,6 +107,7 @@ vim.keymap.set('n', "ge", "G")
 vim.keymap.set('n', "gs", "^")
 vim.keymap.set('n', "gl", "$h")
 vim.keymap.set('n', "<leader>w", "<C-w>")
+vim.keymap.set('n', "<leader>v", "<C-v>")
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end,
@@ -124,7 +130,7 @@ vim.keymap.set("n", "<leader>hl", function() ui.nav_file(4) end)
 require'mason'.setup{}
 local lsp = require'lsp-zero'
 local cmp = require'cmp'
-local servers = {'tsserver','rust_analyzer', 'lua_ls'}
+local servers = {'rust_analyzer', 'lua_ls'}
 require'mason-lspconfig'.setup{
   ensure_installed = servers,
   handlers = { lsp.default_setup }
