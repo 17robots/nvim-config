@@ -75,6 +75,7 @@ require'lazy'.setup({
    }
  },
  'navarasu/onedark.nvim',
+ 'datsfilipe/vesper.nvim',
  'xiyaowong/transparent.nvim',
  {'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = {
     'nvim-lua/plenary.nvim',
@@ -83,12 +84,18 @@ require'lazy'.setup({
 })
 
 -- after (general)
-require'onedark'.setup {
-  style = 'darker'
+require'vesper'.setup {
+  transparent = true,
+  italics = {
+    comments = true,
+    keywords = true,
+    functions = true,
+    strings = true,
+    variables = true,
+  },
 }
-require'onedark'.load()
 
-vim.cmd('colorscheme onedark')
+vim.cmd('colorscheme vesper')
 vim.cmd('TransparentEnable')
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
