@@ -191,7 +191,7 @@ require'telescope'.setup {
 pcall(require'telescope'.load_extension, 'fzf')
 
 vim.keymap.set('n', '<leader>b', function() builtin.buffers(themes.get_dropdown { previewer = false}) end, { desc = 'Find existing [B]uffers' })
-vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = 'Search [F]iles' })
+vim.keymap.set('n', '<leader>f', function() builtin.find_files(themes.get_dropdown { previewer = false}) end, { desc = 'Search [F]iles' })
 vim.keymap.set('n', '<leader>i', builtin.diagnostics, { desc = 'Search d[I]agnostics' })
 vim.keymap.set('n', '<leader>/', function() builtin.grep_string({search = vim.fn.input("Grep > ")}) end, { desc = 'Search with Grep' })
 
