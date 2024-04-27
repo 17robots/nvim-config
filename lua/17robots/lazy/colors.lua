@@ -10,7 +10,7 @@ return {
   {
     'datsfilipe/vesper.nvim',
     config = function()
-      require'vesper'.setup {
+      require 'vesper'.setup {
         transparent = true,
         italics = {
           comments = true,
