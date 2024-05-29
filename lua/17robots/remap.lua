@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>x", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>x", ":NvimTreeToggle<CR>")
 
 vim.keymap.set("n", "gs", '^')
 vim.keymap.set("n", "gl", '$h')
@@ -35,7 +35,7 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "ge", "G")
 vim.keymap.set("n", "gl", "$")
 vim.keymap.set("n", "gs", "^")
-vim.keymap.set("n", "C", "<C-v>")
+vim.keymap.set("n", "C", "<C-V>")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
