@@ -1,16 +1,6 @@
 return {
-  'datsfilipe/vesper.nvim',
+  'folke/tokyonight.nvim',
   config = function()
-    require'vesper'.setup({
-      transparent = true,
-      italics = {
-        comments = true,
-        keywords = true,
-        functions = true,
-        strings = true,
-        variables = true,
-      },
-    })
-    vim.cmd.colorscheme('vesper')
+    vim.cmd.colorscheme('tokyonight-storm')
   end
 }
