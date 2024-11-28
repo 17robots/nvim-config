@@ -34,8 +34,12 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "ge", "G")
 vim.keymap.set("n", "gl", "$")
+vim.keymap.set("v", "gl", "$")
 vim.keymap.set("n", "gs", "^")
+vim.keymap.set("v", "gs", "^")
 vim.keymap.set("n", "C", "<C-V>")
+vim.keymap.set("n", "mm", "%")
+vim.keymap.set("v", "mm", "%")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
