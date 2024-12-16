@@ -1,6 +1,6 @@
 return {
-  'folke/tokyonight.nvim',
+  'AlexvZyl/nordic.nvim',
   config = function()
-    vim.cmd.colorscheme('tokyonight-storm')
+    vim.cmd.colorscheme('nordic')
   end
 }
