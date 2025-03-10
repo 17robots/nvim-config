@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>x", ":NvimTreeToggle<CR>")
 
 vim.keymap.set("n", "gs", '^')
 vim.keymap.set("n", "gl", '$h')
