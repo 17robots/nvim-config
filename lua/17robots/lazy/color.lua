@@ -1,6 +1,13 @@
 return {
-  'AlexvZyl/nordic.nvim',
-  config = function()
-    vim.cmd.colorscheme('nordic')
-  end
+  {
+    'Shatur/neovim-ayu',
+    config = function()
+      require'ayu'.setup{
+        mirage = false,
+        terminal = true,
+        overrides = {},
+      }
+      vim.cmd.colorscheme('ayu')
+    end
+  }
 }
