@@ -13,10 +13,6 @@ return {
     vim.keymap.set('n', '<leader>f', builtin.find_files, {})
     vim.keymap.set('n', '<leader>i', builtin.diagnostics, {})
     vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
-    vim.keymap.set('n', '<leader>w', function()
-      local word = vim.fn.expand '<cword>'
-      builtin.grep_string { search = word }
-    end)
     vim.keymap.set('n', '<leader>/', function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
     end)

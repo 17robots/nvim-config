@@ -3,7 +3,7 @@ return {
     'Shatur/neovim-ayu',
     config = function()
       require'ayu'.setup{
-        mirage = false,
+        mirage = true,
         terminal = true,
         overrides = {},
       }
