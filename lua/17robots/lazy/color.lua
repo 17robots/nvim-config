@@ -1,13 +1,8 @@
 return {
   {
-    'Shatur/neovim-ayu',
+    'shaunsingh/nord.nvim',
     config = function()
-      require'ayu'.setup{
-        mirage = true,
-        terminal = true,
-        overrides = {},
-      }
-      vim.cmd.colorscheme('ayu')
+      vim.cmd.colorscheme('nord')
     end
   }
 }
