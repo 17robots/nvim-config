@@ -9,7 +9,7 @@ return {
     completion = { documentation = { auto_show = true, auto_show_delay_ms = 50 } },
     sources = { default = { 'lsp', 'path', 'snippets' }, },
     snippets = { preset = 'luasnip' },
-    fuzzy = { implementation = 'prefer_rust_with_warning' },
+    fuzzy = { implementation = 'prefer_rust' },
     signature = { enabled = true }
   },
 }
