@@ -4,7 +4,7 @@ return {
   build = 'cargo build --release',
   dependencies = { 'L3MON4D3/LuaSnip' },
   opts = {
-    keymap = { preset = 'default' },
+    keymap = { preset = 'enter' },
     appearance = { nerd_font_variant = 'mono' },
     completion = {
       documentation = { auto_show = false, auto_show_delay_ms = 50 },
