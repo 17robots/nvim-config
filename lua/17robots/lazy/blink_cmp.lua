@@ -6,7 +6,10 @@ return {
   opts = {
     keymap = { preset = 'default' },
     appearance = { nerd_font_variant = 'mono' },
-    completion = { documentation = { auto_show = true, auto_show_delay_ms = 50 } },
+    completion = {
+      documentation = { auto_show = false, auto_show_delay_ms = 50 }
+      ghost_text = { enabled = true },
+    },
     sources = { default = { 'lsp', 'path', 'snippets' }, },
     snippets = { preset = 'luasnip' },
     fuzzy = { implementation = 'prefer_rust' },
