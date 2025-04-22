@@ -1,77 +1,55 @@
 return {
-  "neovim/nvim-lspconfig",
+  'neovim/nvim-lspconfig',
   dependencies = {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/nvim-cmp",
-    "L3MON4D3/LuaSnip",
-    "saadparwaiz1/cmp_luasnip",
+    { 'williamboman/mason.nvim', opts = {} },
+    'williamboman/mason-lspconfig.nvim',
+    'saghen/blink.cmp',
   },
   config = function()
-    local cmp = require 'cmp'
-    local cmp_lsp = require 'cmp_nvim_lsp'
-    local capabilities = vim.tbl_deep_extend("force", {}, vim.lsp.protocol.make_client_capabilities(),
-      cmp_lsp.default_capabilities())
+    vim.api.nvim_create_autocmd('LspAttach', {
+      callback = function(event)
+        vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { buf = event.buf })
+        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buf = event.buf })
 
-    require 'mason'.setup()
-    require 'mason-lspconfig'.setup {
-      ensure_installed = {},
+        local function client_supports_method(client, method, bufnr)
+          if vim.fn.has 'nvim-0.11' == 1 then return client:supports_method(method, bufnr) else return client.supports_method(method) end
+        end
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+          vim.keymap.set('n', '<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled{ bufnr = event.buf }) end)
+        end
+      end,
+    })
+    vim.diagnostic.config{
+      severity_sort = true,
+      float = { border = 'rounded', source 'if_many' },
+      underline = { severity = vim.diagnostic.severity.ERROR },
+      virtual_text = {
+        source = 'if_many',
+        spacing = 2,
+        format = function(diagnostic)
+          local diagnostic_message = {
+            [vim.diagnostic.severity.ERROR] = diagnostic.message,
+            [vim.diagnostic.severity.WARN] = diagnostic.message,
+            [vim.diagnostic.severity.INFO] = diagnostic.message,
+            [vim.diagnostic.severity.HINT] = diagnostic.message,
+          }
+          return diagnostic_message[diagnostic.severity]
+        end,
+      },
+    }
+    local capabilities = require'blink.cmp'.get_lsp_capabilities()
+    local servers = {}
+    local ensure_installed = vim.tbl_keys(servers or {})
+    require'mason-lspconfig'.setup{
+      ensure_installed = ensure_installed,
       handlers = {
         function(server_name)
-          require 'lspconfig'[server_name].setup { capabilities = capabilities }
-        end,
-        ['lua_ls'] = function()
-          local lspconfig = require 'lspconfig'
-          lspconfig.lua_ls.setup {
-            capabilities = capabilities,
-            settings = {
-              Lua = {
-                runtime = { version = 'Lua 5.1' },
-                diagnostics = {
-                  globals = { 'vim', 'it', 'describe', 'before_each', 'after_each' }
-                }
-              }
-            }
-          }
-        end
-      }
-    }
-
-    local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-    cmp.setup {
-      snippet = {
-        expand = function(args)
-          require 'luasnip'.lsp_expand(args.body)
+          local server = servers[server_name] or {}
+          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+          require'lspconfig'[server_name].setup(server)
         end
       },
-      mapping = cmp.mapping.preset.insert {
-        ['<C-b>'] = cmp.mapping.select_prev_item(cmp_select),
-        ['<C-f>'] = cmp.mapping.select_next_item(cmp_select),
-        ['<C-Space>'] = cmp.mapping.complete {},
-        ['<CR>'] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true, }
-      },
-      sources = cmp.config.sources {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-      }, {
-      { name = 'buffer' },
-    }
-    }
-
-    vim.diagnostic.config {
-      float = {
-        focusable = false,
-        style = 'minimal',
-        border = 'rounded',
-        source = 'always',
-        header = '',
-        prefix = ''
-      }
     }
   end
 }
