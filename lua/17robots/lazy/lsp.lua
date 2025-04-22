@@ -8,8 +8,16 @@ return {
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(event)
-        vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { buf = event.buf })
-        vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buf = event.buf })
+        local opts = { buffer = event.buf }
+        vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
+        vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
+        vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "<leader>i", require'fzf-lua'.diagnostics_workspace, opts)
 
         local function client_supports_method(client, method, bufnr)
           if vim.fn.has 'nvim-0.11' == 1 then return client:supports_method(method, bufnr) else return client.supports_method(method) end
