@@ -14,7 +14,7 @@ return {
     vim.keymap.set('n', '<leader>i', builtin.diagnostics, {})
     vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
     -- vim.keymap.set('n', '<leader>/', function()
-      builtin.grep_string({ search = vim.fn.input("Grep > ") })
-    end)
+    --  builtin.grep_string({ search = vim.fn.input("Grep > ") })
+    -- end)
   end
 }
