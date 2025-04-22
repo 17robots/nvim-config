@@ -41,7 +41,7 @@ vim.keymap.set("n", "mm", "%")
 vim.keymap.set("v", "mm", "%")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", [[:NvimTreeToggle<CR>]])
+-- vim.keymap.set("n", "<leader>x", [[:NvimTreeToggle<CR>]])
 vim.keymap.set("n", "<leader>w", [[<C-w>]])
 
 vim.keymap.set(
