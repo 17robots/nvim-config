@@ -3,6 +3,7 @@ return {
   opts = {
     winopts = {
       preview = {
+        vertical = 'up:65%',
         layout = 'vertical',
       },
     },
