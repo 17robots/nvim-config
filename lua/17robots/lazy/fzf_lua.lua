@@ -1,5 +1,13 @@
 return {
   'ibhagwan/fzf-lua',
+  opts = {
+    winopts = {
+      preview = {
+        vertical = 'up:65%',
+        layout = 'vertical',
+      },
+    },
+  },
   dependencies = { 'echasnovski/mini.icons' },
   keys = {
     { '<leader>f', function() require('fzf-lua').files() end },
