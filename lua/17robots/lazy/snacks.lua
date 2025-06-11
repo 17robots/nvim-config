@@ -9,7 +9,7 @@ return {
     explorer = {},
     input = {enabled = true},
     notifier = {enabled = true},
-    picker = {enabled = true},
+    picker = { enabled = true, },
     scope = {
       enabled = true,
       treesitter = {
@@ -22,9 +22,10 @@ return {
   },
   keys = {
     { '<leader>x', function() Snacks.explorer() end },
-    { '<leader>f', function() Snacks.picker.files() end },
+    { '<leader>f', function() Snacks.picker.files({layout = { preset = 'vscode' }}) end },
     { '<leader>b', function() Snacks.picker.buffers() end },
     { '<leader>/', function() Snacks.picker.grep() end },
+    { '<leader>u', function() Snacks.picker.undo() end },
     { '<leader>t', function() Snacks.terminal.open() end },
   },
 }

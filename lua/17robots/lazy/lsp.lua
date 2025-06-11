@@ -11,12 +11,12 @@ return {
         local opts = { buffer = event.buf }
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, opts)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "<leader>d", function() Snacks.picker.diagnostics() end, opts)
+        vim.keymap.set("n", "gr", function() Snacks.picker.lsp_references() end, opts)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gd", function() Snacks.picker.lsp_type_definitions() end, opts)
         vim.keymap.set("n", "<leader>i", function() Snacks.picker.diagnostics() end, opts)
 
         local function client_supports_method(client, method, bufnr)
