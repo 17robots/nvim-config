@@ -17,7 +17,7 @@ return {
         vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "<leader>i", require'fzf-lua'.diagnostics_workspace, opts)
+        vim.keymap.set("n", "<leader>i", function() Snacks.picker.diagnostics() end, opts)
 
         local function client_supports_method(client, method, bufnr)
           if vim.fn.has 'nvim-0.11' == 1 then return client:supports_method(method, bufnr) else return client.supports_method(method) end
