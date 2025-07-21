@@ -41,7 +41,6 @@ vim.keymap.set("n", "mm", "%")
 vim.keymap.set("v", "mm", "%")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- vim.keymap.set("n", "<leader>x", [[:NvimTreeToggle<CR>]])
 vim.keymap.set("n", "<leader>w", [[<C-w>]])
 
 vim.keymap.set(
@@ -53,3 +52,11 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
+
+vim.keymap.set('n', '<leader>t', function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd('J')
+  vim.api.nvim_win_set_height(0, 15)
+end)
+vim.keymap.set('t', '<escape><escape>', '<c-\\><c-n>')

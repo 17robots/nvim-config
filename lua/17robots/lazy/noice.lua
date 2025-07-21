@@ -19,16 +19,7 @@ return {
     },
     cmdline = {
       view = "cmdline_popup",
-      format = {
-        -- keep your existing formats (optional)
-        cmdline = { icon = "", lang = "bash" },
-      },
     },
-    -- Enable the popupmenu view
-    popupmenu = {
-      enabled = true,
-    },
-
     views = {
       cmdline_popup = {
         relative = "editor",
@@ -39,39 +30,10 @@ return {
           padding = { 1, 2 },
         },
       },
-
-      popupmenu = {
-        relative = "editor",
-        position = {
-          row = "50%+1",
-          col = "50%",
-        },
-        size = {
-          width = "auto",
-          height = "auto",
-          max_width = 80,
-          max_height = 10,
-        },
-        border = {
-          style = "rounded",
-        },
-        -- anchor by the north edge so it grows downward
-        anchor = "N",
-        win_options = {
-          winblend = 10,
-        },
-      },
     },
-
-    -- route all cmdline messages through the popup
     routes = {
       {
-        -- view = "cmdline_popup",
         filter = { event = "Cmdline" },
-      },
-      {
-        -- view = "popupmenu",
-        filter = { event = "complete_changed" },
       },
     },
   },

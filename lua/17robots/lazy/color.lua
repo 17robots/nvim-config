@@ -1,8 +1,8 @@
 return {
   {
-    'shaunsingh/nord.nvim',
+    'sainnhe/everforest',
     config = function()
-      vim.cmd.colorscheme('nord')
+      vim.cmd.colorscheme('everforest')
     end
   }
 }

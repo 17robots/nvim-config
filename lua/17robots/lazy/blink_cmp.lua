@@ -1,6 +1,6 @@
 return {
   'saghen/blink.cmp',
-  event = 'VimEnter',
+  event = 'InsertEnter',
   build = 'cargo build --release',
   dependencies = { 'L3MON4D3/LuaSnip' },
   opts = {

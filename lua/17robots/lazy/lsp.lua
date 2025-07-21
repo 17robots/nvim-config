@@ -1,10 +1,12 @@
 return {
   'neovim/nvim-lspconfig',
+  lazy = false,
   dependencies = {
     { 'williamboman/mason.nvim', opts = {} },
     'williamboman/mason-lspconfig.nvim',
     'saghen/blink.cmp',
   },
+  event = { "BufReadPost", "BufNewFile" },
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(event)
