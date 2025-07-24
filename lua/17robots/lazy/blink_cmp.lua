@@ -1,7 +1,7 @@
 return {
   'saghen/blink.cmp',
   event = 'InsertEnter',
-  build = 'cargo build --release',
+  version = '1.*',
   dependencies = { 'L3MON4D3/LuaSnip' },
   opts = {
     keymap = { preset = 'enter' },
