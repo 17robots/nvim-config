@@ -14,7 +14,6 @@ return {
           end
         },
         fd_opts = [[--color=never --hidden --type f --type l --exclude .git --exclude .jj]],
-        --formatter = 'path.filename_first',
       },
       winopts = {
         preview = {

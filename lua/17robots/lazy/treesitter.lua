@@ -1,29 +1,27 @@
 return {
   'nvim-treesitter/nvim-treesitter',
-  build = ':TSUpdate',
   lazy = false,
+  build = ':TSUpdate',
   branch = 'main',
   config = function()
-    require 'nvim-treesitter.configs'.setup {
-      ensure_installed = { 'vimdoc', 'javascript', 'typescript', 'c', 'lua', 'rust', 'jsdoc', 'bash', 'zig' },
-      sync_install = true,
-      auto_install = true,
-      indent = { enable = true },
-      highlight = { enable = true, additional_vim_regex_hightlighting = 'markdown' }
-    }
-    local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-    parser_config.dyn = {
-      install_info = {
-        url = "https://github.com/17robots/tree-sitter-dyn",
-        files = {"src/parser.c"},
-        branch = 'neovim',
-      },
-      filetype = 'dyn',
-    }
-    vim.filetype.add {
-      extension = {
-        dyn = 'dyn'
-      }
-    }
-  end
+    local ensure_installed = { 'vimdoc', 'dyn', 'javascript', 'typescript', 'c', 'go', 'lua', 'rust', 'jsdoc', 'bash', 'zig', 'pug', 'css' },
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'TSUpdate',
+      callback = function()
+        require'nvim-treesitter.parsers'.dyn = {
+          install_info = {
+            url = 'https://github.com/17robots/tree-sitter-dyn',
+            branch = 'neovim',
+            queries = 'queries',
+          }
+        }
+      end,
+    })
+    vim.filetype.add{ extension = { dyn = 'dyn' } }
+    require'nvim-treesitter'.install(ensure_installed)
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'vimdoc', 'dyn', 'javascript', 'typescript', 'c', 'go', 'lua', 'rust', 'jsdoc', 'bash', 'zig', 'pug', 'css' },
+      callback = function() vim.treesitter.start() end,
+    })
+  end,
 }
