@@ -1,1 +1,8 @@
-return {'T3rmn/Ghostty_dark_nvim', config = function() vim.cmd [[ colorscheme ghostty_dark ]] end}
+return {
+  'navarasu/onedark.nvim',
+  priority = 1000,
+  config = function()
+    require'onedark'.setup{ style = 'darker' }
+    require'onedark'.load()
+  end
+}
