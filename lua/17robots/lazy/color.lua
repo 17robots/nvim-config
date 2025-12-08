@@ -1,8 +1,6 @@
 return {
-  "ellisonleao/gruvbox.nvim",
-  priority = 1000,
+  'EdenEast/nightfox.nvim',
   config = function()
-    vim.o.background = 'dark'
-    vim.cmd[[colorscheme gruvbox]]
+    vim.cmd[[ colorscheme nordfox]]
   end
 }

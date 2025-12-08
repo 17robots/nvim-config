@@ -16,6 +16,8 @@ vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
+vim.opt.mouse = ''
+vim.opt.mousemodel='extend'
 vim.g.neovide_scale_factor = 0.70
 
 vim.api.nvim_create_autocmd('TermOpen', {

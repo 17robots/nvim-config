@@ -11,8 +11,8 @@ return {
         require'nvim-treesitter.parsers'.dyn = {
           install_info = {
             url = 'https://github.com/17robots/tree-sitter-dyn',
-            branch = 'neovim',
-            queries = 'queries',
+            branch = 'main',
+            queries = 'neovim',
           }
         }
       end,
