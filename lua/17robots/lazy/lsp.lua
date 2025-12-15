@@ -13,13 +13,13 @@ return {
         local opts = { buffer = event.buf }
         vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
         vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, opts)
-        vim.keymap.set("n", "<leader>d", function() require'fzf-lua'.diagnostics_document() end, opts)
-        vim.keymap.set("n", "gr", function() require'fzf-lua'.lsp_references() end, opts)
+        vim.keymap.set("n", "<leader>d", MiniExtra.pickers.diagnostic, opts)
+        vim.keymap.set("n", "gr", function() MiniExtra.pickers.lsp({ scope = 'references'}) end, opts)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "gd", function() require'fzf-lua'.lsp_definitions() end, opts)
-        vim.keymap.set("n", "<leader>i", function() require'fzf-lua'.diagnostics_workspace() end, opts)
+        vim.keymap.set("n", "gd", function() MiniExtra.pickers.lsp({ scope = 'definition'}) end, opts)
+        vim.keymap.set("n", "<leader>i", MiniExtra.pickers.diagnostic, opts)
 
         local function client_supports_method(client, method, bufnr)
           if vim.fn.has 'nvim-0.11' == 1 then return client:supports_method(method, bufnr) else return client.supports_method(method) end

@@ -10,10 +10,12 @@ return {
     require'mini.bufremove'.setup()
     require'mini.snippets'.setup()
     require'mini.completion'.setup()
+    require'mini.extra'.setup()
   end,
   keys = {
     { '<leader>x', function() MiniFiles.open() end },
     { '<leader>f', function() MiniPick.builtin.files() end },
     { '<leader>b', function() MiniPick.builtin.buffers() end },
+    { '<leader>/', function() MiniPick.builtin.grep_live() end },
   }
 }
