@@ -114,6 +114,7 @@ vim.api.nvim_create_autocmd('BufWritePre', { group = group, pattern = '*', comma
 vim.keymap.set('n', '<leader>f', function() require'fzf-lua'.files() end, {})
 vim.keymap.set('n', '<leader>b', function() require'fzf-lua'.buffers() end, {})
 vim.keymap.set('n', '<leader>d', function() require'fzf-lua'.diagnostics() end, {})
+vim.keymap.set('n', '<leader>/', function() require'fzf-lua'.live_grep() end, {})
 vim.keymap.set('n', '<leader>gd', function() require'fzf-lua'.lsp_definitions() end, {})
 vim.keymap.set('n', '<leader>gD', function() require'fzf-lua'.lsp_declarations() end, {})
 vim.keymap.set('n', '<leader>gr', function() require'fzf-lua'.lsp_references() end, {})
