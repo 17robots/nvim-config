@@ -9,7 +9,8 @@ vim.pack.add{
   'https://github.com/nvim-treesitter/nvim-treesitter',
 
   -- colorscheme
-  'https://github.com/EdenEast/nightfox.nvim',
+  -- 'https://github.com/EdenEast/nightfox.nvim',
+  'https://github.com/ellisonleao/gruvbox.nvim',
 
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
@@ -51,7 +52,7 @@ vim.opt.updatetime = 50
 vim.opt.mouse = ''
 vim.opt.mousemodel='extend'
 vim.g.neovide_scale_factor = 0.70
-vim.cmd[[colorscheme nordfox]]
+vim.cmd[[colorscheme gruvbox]]
 
 -- file explorer
 require'mini.files'.setup{}
