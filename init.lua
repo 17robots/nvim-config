@@ -14,7 +14,9 @@ vim.pack.add{
 
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
-  'https://github.com/mason-org/mason-lspconfig.nvim'
+  'https://github.com/mason-org/mason-lspconfig.nvim',
+  'https://github.com/mfussenegger/nvim-dap',
+  'https://github.com/jay-babu/mason-nvim-dap.nvim'
 }
 vim.g.mapleader = " "
 
@@ -90,6 +92,7 @@ vim.api.nvim_create_autocmd('FileType', { pattern = ensure_installed, callback =
 -- Mason
 require'mason'.setup{}
 require'mason-lspconfig'.setup{}
+require'mason-nvim-dap'.setup{}
 
 -- other
 vim.api.nvim_create_autocmd('TermOpen', {
