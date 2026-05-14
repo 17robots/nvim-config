@@ -8,10 +8,6 @@ vim.pack.add{
 
   'https://github.com/nvim-treesitter/nvim-treesitter',
 
-  -- colorscheme
-  -- 'https://github.com/EdenEast/nightfox.nvim',
-  'https://github.com/ellisonleao/gruvbox.nvim',
-
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/mason-org/mason-lspconfig.nvim',
@@ -58,7 +54,6 @@ vim.opt.wildmenu=true
 vim.opt.wildmode='list:longest,full'
 vim.opt.wildoptions='pum'
 vim.g.neovide_scale_factor = 0.70
-vim.cmd[[colorscheme gruvbox]]
 
 -- file explorer
 require'mini.files'.setup{}
