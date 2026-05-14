@@ -1,7 +1,7 @@
 vim.pack.add{
   -- files
   'https://github.com/nvim-tree/nvim-web-devicons',
-  'https://github.com/ibhagwan/fzf-lua',
+  'https://github.com/nvim-mini/mini.pick',
 
   -- file explorer
   'https://github.com/nvim-mini/mini.files',
@@ -53,11 +53,16 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.mouse = ''
 vim.opt.mousemodel='extend'
+vim.opt.path='**'
+vim.opt.wildmenu=true
+vim.opt.wildmode='list:longest,full'
+vim.opt.wildoptions='pum'
 vim.g.neovide_scale_factor = 0.70
 vim.cmd[[colorscheme gruvbox]]
 
 -- file explorer
 require'mini.files'.setup{}
+require'mini.pick'.setup{}
 
 -- LSP
 vim.diagnostic.config{ virtual_text = false, virtual_lines = { current_line = true } }
@@ -115,14 +120,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('BufWritePre', { group = group, pattern = '*', command = [[%s/\s\+$//e]] })
 
 -- keymaps
-vim.keymap.set('n', '<leader>f', function() require'fzf-lua'.files() end, {})
-vim.keymap.set('n', '<leader>b', function() require'fzf-lua'.buffers() end, {})
-vim.keymap.set('n', '<leader>d', function() require'fzf-lua'.diagnostics() end, {})
-vim.keymap.set('n', '<leader>/', function() require'fzf-lua'.live_grep() end, {})
-vim.keymap.set('n', '<leader>gd', function() require'fzf-lua'.lsp_definitions() end, {})
-vim.keymap.set('n', '<leader>gD', function() require'fzf-lua'.lsp_declarations() end, {})
-vim.keymap.set('n', '<leader>gr', function() require'fzf-lua'.lsp_references() end, {})
-vim.keymap.set('n', '<leader>gI', function() require'fzf-lua'.lsp_implementations() end, {})
+vim.keymap.set('n', '<leader>f', function() vim.cmd[[Pick files]] end, {})
+vim.keymap.set('n', '<leader>b', function() vim.cmd[[Pick buffers]] end, {})
+vim.keymap.set('n', '<leader>d', function() vim.diagnostic.open_float() end, {})
+vim.keymap.set('n', '<leader>/', function() vim.cmd[[Pick grep_live]] end, {})
+vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, {})
+vim.keymap.set('n', 'gD', function() vim.lsp.buf.declaration() end, {})
+vim.keymap.set('n', 'gr', function() vim.lsp.buf.references() end, {})
+vim.keymap.set('n', 'gI', function() vim.lsp.buf.implementation() end, {})
 vim.keymap.set('n', '<leader>r', function() vim.lsp.buf.rename() end, {})
 vim.keymap.set('n', '<leader>a', function() vim.lsp.buf.code_action() end, {})
 vim.keymap.set('n', '<leader>x', function() MiniFiles.open() end, {})
