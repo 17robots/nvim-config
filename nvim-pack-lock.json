@@ -4,6 +4,10 @@
       "rev": "1e866cce085cc6df3d3e4fb59f00105fa84cef6c",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
+    "ghostty-default-style-dark.nvim": {
+      "rev": "b09d4d51f614cd1c14444d8586e0ba3ba3119787",
+      "src": "https://github.com/nkxxll/ghostty-default-style-dark.nvim"
+    },
     "mason-lspconfig.nvim": {
       "rev": "0a3b42c3e503df87aef6d6513e13148381495c3a",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim"

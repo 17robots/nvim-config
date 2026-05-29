@@ -12,7 +12,8 @@ vim.pack.add{
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/mason-org/mason-lspconfig.nvim',
   'https://github.com/mfussenegger/nvim-dap',
-  'https://github.com/jay-babu/mason-nvim-dap.nvim'
+  'https://github.com/jay-babu/mason-nvim-dap.nvim',
+  'https://github.com/nkxxll/ghostty-default-style-dark.nvim'
 }
 vim.g.mapleader = " "
 
@@ -58,6 +59,11 @@ vim.g.neovide_scale_factor = 0.70
 -- file explorer
 require'mini.files'.setup{}
 require'mini.pick'.setup{}
+
+
+-- colorscheme
+require'ghostty-default-style-dark'.setup{}
+vim.cmd.colorscheme'ghostty-default-style-dark'
 
 -- LSP
 vim.diagnostic.config{ virtual_text = false, virtual_lines = { current_line = true } }
