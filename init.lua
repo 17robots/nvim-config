@@ -13,7 +13,7 @@ vim.pack.add{
   'https://github.com/mason-org/mason-lspconfig.nvim',
   'https://github.com/mfussenegger/nvim-dap',
   'https://github.com/jay-babu/mason-nvim-dap.nvim',
-  'https://github.com/nkxxll/ghostty-default-style-dark.nvim'
+  'https://github.com/navarasu/onedark.nvim',
 }
 vim.g.mapleader = " "
 
@@ -27,8 +27,8 @@ vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.o.autocomplete = true
-vim.o.completeopt = 'menu,menuone,noselect,nearest'
+vim.o.autocomplete = false
+vim.o.completeopt = 'menu,menuone,noselect,popup'
 vim.o.termguicolors = true
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -62,11 +62,18 @@ require'mini.pick'.setup{}
 
 
 -- colorscheme
-require'ghostty-default-style-dark'.setup{}
-vim.cmd.colorscheme'ghostty-default-style-dark'
+require'onedark'.setup{ style = 'dark' }
+require'onedark'.load()
+-- vim.cmd.colorscheme''
 
 -- LSP
 vim.diagnostic.config{ virtual_text = false, virtual_lines = { current_line = true } }
+vim.lsp.config('dyn', {
+  cmd = { '/home/mdray/17robots/dyn/build/dyn', 'lsp'},
+  filetypes = { 'dyn' },
+  root_markers = { 'dyn.project', '.git', '.jj' }
+})
+vim.lsp.enable'dyn'
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local bufnr = args.buf
@@ -76,6 +83,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end
 })
+vim.keymap.set('i', '<C-Space>', function() vim.lsp.completion.get() end)
+vim.keymap.set('i', '<CR>', function()
+  if vim.fn.pumvisible() == 0 then return '<CR>' end
+  return vim.fn.complete_info({ 'selected' }).selected == -1 and '<C-n><C-y>' or '<C-y>'
+end, { expr = true })
 
 -- Treesitter
 vim.filetype.add{ extension = { dyn = 'dyn' } }
@@ -86,6 +98,7 @@ vim.api.nvim_create_autocmd('User', {
   require'nvim-treesitter.parsers'.dyn = {
     install_info = {
       url = 'https://github.com/17robots/tree-sitter-dyn',
+      -- url = '~/17robots/dyn/tree-sitter-dyn',
       branch = 'main',
       queries = 'neovim'
     }
