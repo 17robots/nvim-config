@@ -69,7 +69,7 @@ require'onedark'.load()
 -- LSP
 vim.diagnostic.config{ virtual_text = false, virtual_lines = { current_line = true } }
 vim.lsp.config('dyn', {
-  cmd = { '/home/mdray/17robots/dyn/build/dyn', 'lsp'},
+  cmd = { 'dyn', 'lsp'},
   filetypes = { 'dyn' },
   root_markers = { 'dyn.project', '.git', '.jj' }
 })
